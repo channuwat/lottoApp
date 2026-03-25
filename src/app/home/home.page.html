@@ -16,18 +16,21 @@
 
     <ion-item-group *ngFor="let calculated of calculatedResult" class="ion-margin">
       <ion-item-divider mode="ios" color="light">
-        <ion-label color="primary" class="ion-text-strong ion-padding">{{calculated.key}} แต้มเต็ม : {{calculated.result}}</ion-label>
+        <ion-label color="primary" class="ion-text-strong ion-padding">{{calculated.key}} แต้มเต็ม :
+          {{calculated.result}}</ion-label>
       </ion-item-divider>
 
       <ion-item>
         <label *ngFor="let result of calculated.value">
           {{result}}&nbsp;
         </label>
-        <ion-button fill="clear" color="warning">คัดลอกชุดนี้</ion-button>
+        <ion-button fill="clear" color="warning" (click)="copyToClipboard(calculated.value)">คัดลอกชุดนี้</ion-button>
       </ion-item>
 
     </ion-item-group>
-
+    <ion-item>
+      <ion-button fill="block" color="warning" (click)="copyToClipboardAll(calculatedResult)">คัดลอกทั้งหมด</ion-button>
+    </ion-item>
     <!-- <ion-list *ngFor="let calculated of calculatedResult" class="ion-margin-top">
       <strong>
         <ion-label color="primary" class="ion-margin-bottom text-strong">เลขชุด : {{calculated.key}}</ion-label>

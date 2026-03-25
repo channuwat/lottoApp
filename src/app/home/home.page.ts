@@ -2,9 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonHeader, IonToolbar, IonTitle, IonContent, IonInput, IonList, IonItem, IonButton, IonText, IonLabel, IonItemGroup, IonItemDivider } from '@ionic/angular/standalone';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-home',
+  standalone: true,
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   imports: [IonItemDivider, IonLabel, IonText, IonInput, IonHeader, IonToolbar, IonTitle, IonContent, CommonModule, IonList, IonItemGroup, IonItem, IonButton, FormsModule],
@@ -12,7 +14,9 @@ import { IonHeader, IonToolbar, IonTitle, IonContent, IonInput, IonList, IonItem
 export class HomePage {
   inputCount: any[] = [{ value: null }]
 
-  constructor() { }
+  public clipboard: Clipboard = new Clipboard();
+  constructor() {
+  }
 
   addInput() {
     this.inputCount.push({ value: null })
@@ -36,7 +40,7 @@ export class HomePage {
         numStr += item.value
         let resultArray = numStr.split('').map(Number);
         let result = resultArray[0] + resultArray[1];
-        this.calculatedResult.push({ key: item.value, result: result,value: this.findPairs(myNumber, result) })
+        this.calculatedResult.push({ key: item.value, result: result, value: this.findPairs(myNumber, result) })
         console.log(this.calculatedResult);
 
       } else {
@@ -60,5 +64,25 @@ export class HomePage {
       }
     }
     return pairs;
+  }
+
+  copyToClipboard(text: any[]) {
+    let textToCopy: string = ''
+    text.forEach(number => {
+      textToCopy += number + ' '
+    })
+    this.clipboard.copy(textToCopy);
+  }
+
+  copyToClipboardAll(textArray: any[]) {
+    let textToCopy: string = ''
+    textArray.forEach(itemGroup => {
+      itemGroup.value.forEach((number: any[]) => {
+        textToCopy += number + ' '
+      })
+      textToCopy += '\n'
+    })
+    console.log(textToCopy);
+    
   }
 }
