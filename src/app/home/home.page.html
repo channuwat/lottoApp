@@ -1,20 +1,43 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <div class="ion-padding">
+    <ion-list>
+      <ion-item *ngFor="let input of inputCount; let i = index">
+        <ion-input [label]="'เลขตัวที่ : '+(i+1)" labelPlacement="floating" placeholder="โปรดระบุเลข..."
+          [(ngModel)]="input.value" type="text"></ion-input>
+        <ion-button fill="clear" color="danger" (click)="removeInput(i)" *ngIf="i != 0">ลบ</ion-button>
+      </ion-item>
+    </ion-list>
+    <div>
+      <ion-button class="ion-margin" expand="block" fill="outline" (click)="addInput()">เพิ่มช่องกรอกตัวเลข</ion-button>
+    </div>
+    <div>
+      <ion-button class="ion-margin" expand="block" (click)="calculate()">คำนวณ</ion-button>
+    </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <ion-item-group *ngFor="let calculated of calculatedResult" class="ion-margin">
+      <ion-item-divider mode="ios" color="light">
+        <ion-label color="primary" class="ion-text-strong ion-padding">{{calculated.key}} แต้มเต็ม : {{calculated.result}}</ion-label>
+      </ion-item-divider>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+      <ion-item>
+        <label *ngFor="let result of calculated.value">
+          {{result}}&nbsp;
+        </label>
+        <ion-button fill="clear" color="warning">คัดลอกชุดนี้</ion-button>
+      </ion-item>
+
+    </ion-item-group>
+
+    <!-- <ion-list *ngFor="let calculated of calculatedResult" class="ion-margin-top">
+      <strong>
+        <ion-label color="primary" class="ion-margin-bottom text-strong">เลขชุด : {{calculated.key}}</ion-label>
+      </strong>
+      <ion-item>
+        <label *ngFor="let result of calculated.value">
+          {{result}}&nbsp;
+        </label>
+        <ion-button fill="clear" color="warning">คัดลอกชุดนี้</ion-button>
+      </ion-item>
+    </ion-list> -->
   </div>
 </ion-content>
