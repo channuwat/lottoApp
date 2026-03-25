@@ -1,46 +1,45 @@
 <ion-content>
   <div class="ion-padding">
-    <ion-list>
-      <ion-item *ngFor="let input of inputCount; let i = index">
-        <ion-input [label]="'เลขตัวที่ : '+(i+1)" labelPlacement="floating" placeholder="โปรดระบุเลข..."
-          [(ngModel)]="input.value" type="text"></ion-input>
-        <ion-button fill="clear" color="danger" (click)="removeInput(i)" *ngIf="i != 0">ลบ</ion-button>
-      </ion-item>
-    </ion-list>
-    <div>
-      <ion-button class="ion-margin" expand="block" fill="outline" (click)="addInput()">เพิ่มช่องกรอกตัวเลข</ion-button>
-    </div>
-    <div>
-      <ion-button class="ion-margin" expand="block" (click)="calculate()">คำนวณ</ion-button>
-    </div>
+    <ion-card>
+      <ion-card-content>
+        <ion-list>
+          <ion-item *ngFor="let input of inputCount; let i = index">
+            <ion-input [label]="'เลขตัวที่ : '+(i+1)" labelPlacement="floating" placeholder="โปรดระบุเลข..."
+              [(ngModel)]="input.value" type="text"></ion-input>
+            <ion-button fill="clear" color="danger" (click)="removeInput(i)" *ngIf="i != 0">ลบ</ion-button>
+          </ion-item>
+        </ion-list>
+        <div>
+          <ion-button class="ion-margin" expand="block" fill="outline"
+            (click)="addInput()">เพิ่มช่องกรอกตัวเลข</ion-button>
+        </div>
+        <div>
+          <ion-button class="ion-margin" expand="block" (click)="calculate()">คำนวณ</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
 
-    <ion-item-group *ngFor="let calculated of calculatedResult" class="ion-margin">
-      <ion-item-divider mode="ios" color="light">
-        <ion-label color="primary" class="ion-text-strong ion-padding">{{calculated.key}} แต้มเต็ม :
-          {{calculated.result}}</ion-label>
-      </ion-item-divider>
+    <ion-card *ngIf="calculatedResult.length??0 > 0">
+      <ion-card-content>
+        <ion-item-group *ngFor="let calculated of calculatedResult" class="ion-margin">
+          <ion-item-divider mode="ios" color="light">
+            <ion-label color="primary" class="ion-text-strong ion-padding">{{calculated.key}} แต้มเต็ม :
+              {{calculated.result}}</ion-label>
+          </ion-item-divider>
 
-      <ion-item>
-        <label *ngFor="let result of calculated.value">
-          {{result}}&nbsp;
-        </label>
-        <ion-button fill="clear" color="warning" (click)="copyToClipboard(calculated.value)">คัดลอกชุดนี้</ion-button>
-      </ion-item>
-
-    </ion-item-group>
-    <ion-item>
-      <ion-button fill="block" color="warning" (click)="copyToClipboardAll(calculatedResult)">คัดลอกทั้งหมด</ion-button>
-    </ion-item>
-    <!-- <ion-list *ngFor="let calculated of calculatedResult" class="ion-margin-top">
-      <strong>
-        <ion-label color="primary" class="ion-margin-bottom text-strong">เลขชุด : {{calculated.key}}</ion-label>
-      </strong>
-      <ion-item>
-        <label *ngFor="let result of calculated.value">
-          {{result}}&nbsp;
-        </label>
-        <ion-button fill="clear" color="warning">คัดลอกชุดนี้</ion-button>
-      </ion-item>
-    </ion-list> -->
+          <ion-item>
+            <label *ngFor="let result of calculated.value">
+              {{result}}&nbsp;
+            </label>
+            <ion-button fill="outline" color="warning"
+              (click)="copyToClipboard(calculated.value)">คัดลอกชุดนี้</ion-button>
+          </ion-item>
+        </ion-item-group>
+        <div *ngIf="calculatedResult.length > 0" class="ion-margin">
+          <ion-button expand="full" color="warning"
+            (click)="copyToClipboardAll(calculatedResult)">คัดลอกทั้งหมด</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
   </div>
 </ion-content>

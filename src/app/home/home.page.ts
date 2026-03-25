@@ -1,21 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonInput, IonList, IonItem, IonButton, IonText, IonLabel, IonItemGroup, IonItemDivider } from '@ionic/angular/standalone';
+import { IonCard,IonCardContent,IonHeader, IonToolbar, IonTitle, IonContent, IonInput, IonList, IonItem, IonButton, IonText, IonLabel, IonItemGroup, IonItemDivider, IonCardHeader, IonCardTitle, IonCardSubtitle } from '@ionic/angular/standalone';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonItemDivider, IonLabel, IonText, IonInput, IonHeader, IonToolbar, IonTitle, IonContent, CommonModule, IonList, IonItemGroup, IonItem, IonButton, FormsModule],
+  imports: [IonCardSubtitle, IonCardTitle, IonCardHeader, IonCard,IonCardContent,IonItemDivider, IonLabel, IonText, IonInput, IonHeader, IonToolbar, IonTitle, IonContent, CommonModule, IonList, IonItemGroup, IonItem, IonButton, FormsModule],
 })
 export class HomePage {
   inputCount: any[] = [{ value: null }]
 
   public clipboard: Clipboard = new Clipboard();
-  constructor() {
+  constructor(private alertController: AlertController) {
   }
 
   addInput() {
@@ -34,17 +35,21 @@ export class HomePage {
   calculate() {
     this.calculatedResult = [] // reset ค่าก่อนคำนวณใหม่
     let myNumber = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-    this.inputCount.forEach(item => {
+    this.inputCount.forEach((item, index) => {
       let numStr: string = '';
-      if (item.value > 0 && item.value < 100) {
+      if (item.value > -1 && item.value < 100 && item.value != null) {
         numStr += item.value
         let resultArray = numStr.split('').map(Number);
         let result = resultArray[0] + resultArray[1];
         this.calculatedResult.push({ key: item.value, result: result, value: this.findPairs(myNumber, result) })
-        console.log(this.calculatedResult);
-
       } else {
-        console.log('เลขไม่ถูกต้อง');
+        numStr += item.value
+        this.alertController.create({
+          header: 'แจ้งเตือน',
+          message: 'กรุณาระบุเลขที่ถูกต้อง (0-99) ในเลขตัวที่ : ' + (index + 1),
+          buttons: ['ตกลง'],
+          mode: 'ios'
+        }).then(alert => alert.present());
       }
     });
   }
@@ -55,7 +60,7 @@ export class HomePage {
     // Loop ตัวแรก (i)
     for (let i = 0; i < numbers.length; i++) {
       // Loop ตัวที่สอง (j) เริ่มจากตัวถัดจาก i เพื่อไม่ให้ซ้ำคู่เดิม
-      for (let j = i + 1; j < numbers.length; j++) {
+      for (let j = 0; j < numbers.length; j++) {
 
         // IF: ตรวจสอบว่าบวกกันได้ Target ไหม
         if (numbers[i] + numbers[j] === target) {
@@ -82,7 +87,8 @@ export class HomePage {
       })
       textToCopy += '\n'
     })
+    this.clipboard.copy(textToCopy);
     console.log(textToCopy);
-    
+
   }
 }
