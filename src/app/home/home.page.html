@@ -1,5 +1,5 @@
 <ion-content>
-  <div class="ion-padding">
+  <div class="ion-text-sm">
     <ion-card>
       <ion-card-content>
         <ion-list>
@@ -10,7 +10,7 @@
           </ion-item>
         </ion-list>
         <div>
-          <ion-button class="ion-margin" expand="block" fill="outline"
+          <ion-button class="ion-margin ion-text-lg" expand="block" fill="outline"
             (click)="addInput()">เพิ่มช่องกรอกตัวเลข</ion-button>
         </div>
         <div>
@@ -23,17 +23,20 @@
       <ion-card-content>
         <ion-item-group *ngFor="let calculated of calculatedResult" class="ion-margin">
           <ion-item-divider mode="ios" color="light">
-            <ion-label color="primary" class="ion-text-strong ion-padding">{{calculated.key}} แต้มเต็ม :
-              {{calculated.result}}</ion-label>
+            <div color="primary" class="ion-text-strong ion-padding">{{calculated.key}} แต้มเต็ม :
+              {{calculated.result}}</div>
           </ion-item-divider>
 
-          <ion-item>
-            <label *ngFor="let result of calculated.value">
+          <div class="ion-display-flex ion-align-items-center ion-wrap">
+            <div *ngFor="let result of calculated.value" class="ion-display-flex ion-align-items-center"
+              style="min-width: 50px; max-width: 80px; height: 50px;">
               {{result}}&nbsp;
-            </label>
-            <ion-button fill="outline" color="warning"
-              (click)="copyToClipboard(calculated.value)">คัดลอกชุดนี้</ion-button>
-          </ion-item>
+            </div>
+            <div style="text-align: center;width: -webkit-fill-available;">
+              <ion-button fill="outline" color="warning" expand="block" 
+                (click)="copyToClipboard(calculated.value)">คัดลอกชุดนี้</ion-button>
+            </div>
+          </div>
         </ion-item-group>
         <div *ngIf="calculatedResult.length > 0" class="ion-margin">
           <ion-button expand="full" color="warning"

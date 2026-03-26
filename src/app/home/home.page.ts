@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonCard, IonCardContent, IonContent, IonList, IonItem, IonButton, IonInput, IonLabel, IonItemGroup, IonItemDivider } from '@ionic/angular/standalone';
+import { IonCard, IonCardContent, IonContent, IonList, IonItem, IonButton, IonInput, IonItemGroup, IonItemDivider } from '@ionic/angular/standalone';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { AlertController } from '@ionic/angular';
 
@@ -10,7 +10,7 @@ import { AlertController } from '@ionic/angular';
   standalone: true,
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonCard, IonCardContent, IonItemDivider, IonLabel, IonContent, IonInput, CommonModule, IonList, IonItemGroup, IonItem, IonButton, FormsModule],
+  imports: [IonCard, IonCardContent, IonItemDivider, IonContent, IonInput, CommonModule, IonList, IonItemGroup, IonItem, IonButton, FormsModule],
 })
 export class HomePage {
   inputCount: any[] = [{ value: null }]
